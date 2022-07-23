@@ -6,6 +6,165 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Get(
+ * path="/",
+ * summary="Welcome Page",
+ * description="Welcome Page",
+ * operationId="welcomePage",
+ * tags={"Welcome"},
+ * @OA\Response(
+ *    response=100,
+ *    description="Wrong credentials response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
+ *        )
+ *     )
+ * )
+ * 
+ *@OA\Post(
+ * path="/users/register",
+ * summary="Sign Up",
+ * description="Sign Up email, password",
+ * operationId="authReg",
+ * tags={"Login/Registeration"},
+ * @OA\RequestBody(
+ *    required=true,
+ *    description="Pass user credentials",
+ *    @OA\JsonContent(
+ *       required={"username","name","email","password"},
+ *       @OA\Property(property="username", type="string", format="text", example="john_99"),
+ *       @OA\Property(property="name", type="string", format="text", example="John"),
+ *       @OA\Property(property="email", type="string", format="email", example="John@mail.com"),
+ *       @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
+ *    ),
+ * ),
+ * @OA\Response(
+ *    response=422,
+ *    description="Wrong credentials response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Sorry, Invalid email address or password. Please try again")
+ *        )
+ *     )
+ * )
+ * 
+ * @OA\Get(
+ * path="/users",
+ * summary="Find Users",
+ * description="Find All Users",
+ * operationId="findAllUsers",
+ * tags={"Apis"},
+ * @OA\Response(
+ *    response=100,
+ *    description="Wrong credentials response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
+ *        )
+ *     )
+ * )
+
+ * @OA\Get(
+ * path="/users/{id}",
+ * summary="Find Single User",
+ * description="Find Single Users",
+ * operationId="findSingleUsers",
+ * tags={"Apis"},
+ * @OA\Parameter(
+ *    description="ID of User",
+ *    in="path",
+ *    name="id",
+ *    required=true,
+ *    example="1",
+ *     @OA\Schema(
+ *       type="integer",
+ *       format="int64"
+ *    ),
+ * ),
+ * @OA\Response(
+ *    response=422,
+ *    description="Wrong credentials response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
+ *        )
+ *     )
+ * )
+ *
+ * @OA\Get(
+ * path="/users/bydate",
+ * summary="Find User By Date",
+ * description="Find User By Date",
+ * operationId="findUserByDate",
+ * tags={"Apis"},
+ * @OA\Response(
+ *    response=422,
+ *    description="Wrong credentials response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
+ *        )
+ *     )
+ * )
+ * 
+ * @OA\Delete(
+ * path="/users/delete",
+ * summary="Delete User By Id",
+ * description="Delete User By Id",
+ * operationId="deleteUserById",
+ * tags={"Apis"},
+ * @OA\RequestBody(
+ *    required=true,
+ *    description="Pass user credentials",
+ *    @OA\JsonContent(
+ *       required={"id"},
+ *       @OA\Property(property="id", type="integer", format="int64", example="1"),
+ *    ),
+ * ),
+ * @OA\Response(
+ *    response=422,
+ *    description="Wrong credentials response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
+ *        )
+ *     )
+ * )
+ *
+ * 
+ * @OA\Put(
+ * path="/users/{id}",
+ * summary="Update Single User",
+ * description="Update Single Users",
+ * operationId="updateSingleUsers",
+ * tags={"Apis"},
+ * @OA\Parameter(
+ *    description="ID of User",
+ *    in="path",
+ *    name="id",
+ *    required=true,
+ *    example="1",
+ *     @OA\Schema(
+ *       type="integer",
+ *       format="int64"
+ *    ),
+ * ),
+ * @OA\RequestBody(
+ *    required=true,
+ *    description="Pass user credentials",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="name", type="string", format="text", example="John"),
+ *    ),
+ * ),
+ * @OA\Response(
+ *    response=422,
+ *    description="Wrong credentials response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
+ *        )
+ *     )
+ * )
+ * 
+ */
+
+
+
 class UserController extends Controller
 {
     /**
@@ -28,6 +187,8 @@ class UserController extends Controller
         $user = User::create($request->validated());
         return redirect('/')->with('success', "Account successfully registered.");
     }
+
+
 
     /**
      * Store a newly created resource in storage.
