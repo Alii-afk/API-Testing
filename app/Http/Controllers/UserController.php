@@ -174,6 +174,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        dd(env('APP_ENV'));
         //
     }
 
